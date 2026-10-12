@@ -1,3 +1,4 @@
+/*
 .counter {
   font-size: 16px;
   padding: 5px 10px;
@@ -69,10 +70,11 @@
     gap: 18px;
   }
 }
-
+/*
 #next-steps {
   display: flex;
-  border-top: 1px solid var(--border);
+  /*border-top: 1px solid var(--border);*/
+/*
   text-align: left;
 
   & > div {
@@ -182,3 +184,4 @@
     border-right-color: var(--border);
   }
 }
+*/
