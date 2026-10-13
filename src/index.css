@@ -360,7 +360,7 @@ body {
 .gremlin-at-rest { /*24 FPS anim, 189 total frames*/
     width: auto;
     height: 50%;
-    z-index: 9999;
+    /*z-index: 9999;*/
     aspect-ratio: 1 / 1;
     background-image: url(src/assets/emote.png); 
     background-size: 1000% 1900%;
@@ -373,6 +373,7 @@ body {
     left: 0;
     width: 150px;
     height: 150px;
+    z-index: 999;
     aspect-ratio: 1 / 1;
     background-image: url(src/assets/run-right-alter.png);
     background-size: 900% 200%;
