@@ -25,7 +25,7 @@ function App() {
 
     const exitTimer = setTimeout(() => {
       setIsGameWindowActive(false);
-    }, 3000);
+    }, 5000);
 
   return () => clearTimeout(exitTimer);
   }, [isRunning, isGameWindowActive]);
@@ -50,12 +50,36 @@ function App() {
         setObjects(prev =>
           prev.filter(object => object.id !== id)
         );
-      }, 3000);
+      }, 5000);
 
     }, 500);
 
     return () => clearInterval(spawnTimer);
   }, [isRunning]);
+
+  // Get coords when clicked
+  function handleGremlinClick(e: React.MouseEvent<HTMLDivElement>, id: string) {
+    const rect = e.currentTarget.getBoundingClientRect();
+
+    e.currentTarget.style.animation = 'none';
+    e.currentTarget.offsetWidth;
+    e.currentTarget.style.animation = '';
+
+    setObjects(prev =>
+      prev.map(object =>
+        object.id === id && !object.clicked
+          ? { ...object, clicked: true, deadX: rect.left, deadY: rect.top }
+          : object
+      )
+    );
+  }
+
+  function handleGremlinAnimationEnd(e: React.AnimationEvent<HTMLDivElement>, id: string) {
+    // The death class runs two animations; spriteY is the long one that ends last
+    if (e.animationName !== 'spriteY') return;
+
+    setObjects(prev => prev.filter(object => object.id !== id));
+  }
 
   function startSession() {
     if (isRunning) return;
@@ -128,7 +152,9 @@ function App() {
       <div className={isGameWindowActive ? "game-area fullscreen" : "game-area"}>
             {objects.map(object => (
               <div
-                className="gremlin-in-motion"
+                className={object.clicked ? "gremlin-memento-mori" : "gremlin-in-motion"}
+                onClick={e => handleGremlinClick(e, object.id)}
+                onAnimationEnd={e => handleGremlinAnimationEnd(e, object.id)}
                 key={object.id}
                 style = {
                   {
@@ -136,9 +162,12 @@ function App() {
                     '--start-y': `${object.startY}px`,
                     '--end-x': `${object.endX}px`,
                     '--end-y': `${object.endY}px`,
+                    '--dead-x': `${object.deadX ?? 0}px`,
+                    '--dead-y': `${object.deadY ?? 0}px`,
                   } as CSSProperties 
                 }
-              />
+              >
+              </div>
             ))}
       </div>
     </>

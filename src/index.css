@@ -327,27 +327,42 @@ body {
   overflow: hidden;
 }
 
-.gremlin-at-rest {
+.gremlin-at-rest { /*24 FPS anim, 189 total frames*/
     width: auto;
     height: 50%;
     z-index: 9999;
     aspect-ratio: 1 / 1;
     background-image: url(src/assets/emote.png); 
     background-size: 1000% 1900%;
-    animation: spriteX 0.25s steps(10, jump-none) infinite, spriteY 4.75s steps(19, jump-none) infinite;
+    animation: spriteX 0.42s steps(10, jump-none) infinite, spriteY 7.98s steps(19, jump-none) infinite;
 }
 
-.gremlin-in-motion {
+.gremlin-in-motion { /*18 FPS anim, 18 total frames*/
     position: absolute;
     top: 0;
     left: 0;
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     aspect-ratio: 1 / 1;
     background-image: url(src/assets/run-right-alter.png);
     background-size: 900% 200%;
-    animation: spriteX 0.5s steps(9, jump-none) infinite, spriteY 1s steps(2, jump-none) infinite, move-gremlin 2.5s linear forwards;
+    animation: spriteX 0.5s steps(9, jump-none) infinite, spriteY 1s steps(2, jump-none) infinite, move-gremlin 4s linear forwards;
     animation-fill-mode: forwards;
+    cursor: pointer;
+}
+
+.gremlin-memento-mori { /*24 FPS anim, 69 total frames*/
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 150px;
+  height: 150px;
+  aspect-ratio: 1 / 1;
+  background-image: url(src/assets/outro.png);
+  background-size: 1000% 700%;
+  animation: spriteX 0.42s steps(10, jump-none), spriteY 2.94s steps(7, jump-none);
+  transform: translate3d(var(--dead-x), var(--dead-y), 0);
+  pointer-events: none;
 }
 
 @keyframes spriteX {
