@@ -19,13 +19,15 @@ function App() {
     return () => clearTimeout(sessionTimer);
   }, [isRunning]);
 
-  //Keep fullscreen for another 3 seconds (ending celebration)
+  //Keep fullscreen for another 5 seconds (ending celebration) [ENDING CELEBERATION SCRAPPED GG]
   useEffect(() => {
     if (isRunning || !isGameWindowActive) return;
 
     const exitTimer = setTimeout(() => {
       setIsGameWindowActive(false);
     }, 5000);
+
+    // TODO: Change images back
 
   return () => clearTimeout(exitTimer);
   }, [isRunning, isGameWindowActive]);
@@ -45,12 +47,12 @@ function App() {
         { id, startX, endX, startY, endY }
       ]);
 
-      // Despawn that object after 3 seconds
+      // Despawn that object after 8 seconds (4 second run + 3 second death animation + 1 grace second idk)
       setTimeout(() => {
         setObjects(prev =>
           prev.filter(object => object.id !== id)
         );
-      }, 5000);
+      }, 8000);
 
     }, 500);
 
@@ -75,8 +77,7 @@ function App() {
   }
 
   function handleGremlinAnimationEnd(e: React.AnimationEvent<HTMLDivElement>, id: string) {
-    // The death class runs two animations; spriteY is the long one that ends last
-    if (e.animationName !== 'spriteY') return;
+    if (e.animationName !== 'spriteY') return; // when this is over the anim is done
 
     setObjects(prev => prev.filter(object => object.id !== id));
   }
@@ -84,6 +85,7 @@ function App() {
   function startSession() {
     if (isRunning) return;
 
+    // TODO: Add method to change images
     setObjects([]);
     setIsRunning(true);
     setIsGameWindowActive(true);
@@ -104,21 +106,21 @@ function App() {
             <p>I'm <strong>Jason Riedel</strong></p>
             <p>Graphic design is my passion</p>
           </div>
-          <div className="avatar" aria-label="Profile silhouette"></div>
+          <div className={`avatar ${isGameWindowActive ? `avatar-active` : ''}`} aria-label="Profile silhouette"></div>
         </header>
 
         <section className="featured project" aria-labelledby="featured-title">
           <div className="featured__heading">
             <div className="title_and_button">
               <h1 id="featured-title">Project #1</h1>
-              <button className="game_start_button" onClick={startSession} disabled={isRunning}></button>
+              <button className={`game_start_button ${isGameWindowActive ? `game_start_button-active` : ''}`} onClick={startSession} disabled={isRunning}></button>
             </div>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br className="desktop-break"/>
               Donec ligula felis, laoreet vel aliquam quis, ultricies egestas dui.</p>
           </div>
           <div className="featured__gallery">
             <button className="pill side-link">Prev</button>
-            <div className="featured__image"></div>
+            <div className={`featured__image ${isGameWindowActive ? `featured__image-active` : ''}`} ></div>
             <button className="pill side-link">Next</button>
           </div>
         </section>
@@ -126,7 +128,7 @@ function App() {
         <section className="project-grid" aria-label="Other projects">
           <article className="project project-card" id="project-2">
             <h2>Project #2</h2>
-            <a className="project-card__image" href="#project-2" aria-label="View Project 2">
+            <a className={`project-card__image ${isGameWindowActive ? `project-card__image-activeOne` : ''}`} href="#project-2" aria-label="View Project 2">
             </a>
             <a className="pill github-link" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ligula felis, laoreet vel aliquam quis, ultricies egestas dui.</p>
@@ -134,7 +136,7 @@ function App() {
 
           <article className="project project-card" id="project-3">
             <h2>Project #3</h2>
-            <a className="project-card__image" href="#project-3" aria-label="View Project 3">
+            <a className={`project-card__image ${isGameWindowActive ? `project-card__image-activeTwo` : ''}`} href="#project-3" aria-label="View Project 3">
             </a>
             <a className="pill github-link" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ligula felis, laoreet vel aliquam quis, ultricies egestas dui.</p>
