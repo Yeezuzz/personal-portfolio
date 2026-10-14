@@ -7,19 +7,45 @@ function App() {
   const [isGameWindowActive, setIsGameWindowActive] = useState(false); // Runs ending celebration and maintains fullscreen after game end
   const startX = -50;
   const endX = window.innerWidth;
+  const [secondsLeft, setSecondsLeft] = useState(20);
+  const [score, setScore] = useState(0);
 
   // Controls the 20-second session
+  /*
   useEffect(() => {
     if (!isRunning) return;
 
+    setSecondsLeft(20);
+
+    
     const sessionTimer = setTimeout(() => {
       setIsRunning(false);
     }, 20000);
-
+    
     return () => clearTimeout(sessionTimer);
   }, [isRunning]);
+    */
+  useEffect(() => {
+    if (!isRunning) return;
 
-  //Keep fullscreen for another 5 seconds (ending celebration) [ENDING CELEBERATION SCRAPPED GG]
+    setSecondsLeft(30);
+
+    const timer = setInterval(() => {
+      setSecondsLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          setIsRunning(false);
+          return 0;
+        }
+
+        return prev - 1;
+    });
+  }, 1000);
+
+  return () => clearInterval(timer);
+}, [isRunning]);
+
+  //Keep fullscreen for another 5 seconds (ending celebration) [ENDING CELEBRATION SCRAPPED GG]
   useEffect(() => {
     if (isRunning || !isGameWindowActive) return;
 
@@ -74,6 +100,8 @@ function App() {
           : object
       )
     );
+
+    setScore(score => score + 1);
   }
 
   function handleGremlinAnimationEnd(e: React.AnimationEvent<HTMLDivElement>, id: string) {
@@ -84,7 +112,7 @@ function App() {
 
   function startSession() {
     if (isRunning) return;
-
+    setScore(score => 0);
     // TODO: Add method to change images
     setObjects([]);
     setIsRunning(true);
@@ -152,6 +180,8 @@ function App() {
 
       {/*Code for THE THING*/}
       <div className={isGameWindowActive ? "game-area fullscreen" : "game-area"}>
+        <div className={isGameWindowActive ? "gameTimer" : "gameTimer-hidden"}>{secondsLeft}</div>
+        <div className={isGameWindowActive ? "scoreBoard" : "scoreBoard-hidden"}>{score}</div>
             {objects.map(object => (
               <div
                 className={object.clicked ? "gremlin-memento-mori" : "gremlin-in-motion"}

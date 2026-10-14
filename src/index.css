@@ -271,6 +271,7 @@ body {
   background-position: center 20%;
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  cursor: pointer;
 }
 
 .game_start_button-active {
@@ -360,7 +361,6 @@ body {
 .gremlin-at-rest { /*24 FPS anim, 189 total frames*/
     width: auto;
     height: 50%;
-    /*z-index: 9999;*/
     aspect-ratio: 1 / 1;
     background-image: url(src/assets/emote.png); 
     background-size: 1000% 1900%;
@@ -420,4 +420,31 @@ body {
   } to {
     transform: translate3d(var(--end-x), var(--end-y), 0);
   }
+}
+
+.gameTimer {
+  position: fixed;
+  color: var(--ink);
+  font-family: Inter, Arial, sans-serif;
+  font-size: 40px;
+  top: 10%;
+  left: calc(10% - 1.6rem);
+}
+
+.gameTimer-hidden {
+  visibility: hidden;
+}
+
+.scoreBoard {
+  position: sticky;
+  color: var(--ink);
+  font-family: Inter, Arial, sans-serif;
+  margin-left: 90%;
+  font-size: 40px;
+  top: 10%;
+  right: calc(10% - 1.6rem);
+}
+
+.scoreBoard-hidden {
+  visibility: hidden;
 }
