@@ -172,7 +172,7 @@ function App() {
           <div className="featured__heading">
             <div className="title_and_button">
               <h1 id="featured-title">Project #1</h1>
-              <button className={`game_start_button ${isGameWindowActive ? `game_start_button-active` : ''}`} onClick={startSession} disabled={isRunning}></button>
+              {/*<button className={`game_start_button ${isGameWindowActive ? `game_start_button-active` : ''}`} onClick={startSession} disabled={isRunning}></button>*/}
             </div>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br className="desktop-break"/>
               Donec ligula felis, laoreet vel aliquam quis, ultricies egestas dui.</p>
@@ -189,35 +189,30 @@ function App() {
             <h2>Project #2</h2>
             <a className={`project-card__image ${isGameWindowActive ? `project-card__image-activeOne` : ''}`} href="#project-2" aria-label="View Project 2">
             </a>
-            <a className="pill github-link" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ligula felis, laoreet vel aliquam quis, ultricies egestas dui.</p>
+            <p>There's nothing here for now... How about you play a game while you wait?</p>
+            <button className={`game_start_button ${isGameWindowActive ? `game_start_button-active` : ''}`} onClick={startSession} disabled={isRunning}></button>
           </article>
 
           <article className="project project-card" id="project-3">
             <h2>Project #3</h2>
-            <a className={`project-card__image ${isGameWindowActive ? `project-card__image-activeTwo` : ''}`} href="#project-3" aria-label="View Project 3">
-            </a>
-            <a className="pill github-link" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ligula felis, laoreet vel aliquam quis, ultricies egestas dui.</p>
+            <div 
+              key={currentIndex} 
+              className="gremlin-at-rest"
+              style={{
+                '--bg-img': `url(src/assets/${currentEmote.name})`,
+                '--cols': currentEmote.cols,
+                '--rows': currentEmote.rows,
+                '--dur-x': `${durationX}s`,
+                '--dur-y': `${durationY}s`,
+              } as React.CSSProperties  }
+            />
+            <p>There's nothing here for now... How about a friend?</p>
+            <div className="controls">
+              <button onClick={prevEmote}>Previous</button>
+              <button onClick={nextEmote}>Next</button>
+            </div>
           </article>
         </section>
-        <div className="gremlin-at-rest"></div>
-        <div 
-        key={currentIndex} 
-        className="gremlin-at-rest"
-        style={{
-          '--bg-img': `url(src/assets/${currentEmote.name})`,
-          '--cols': currentEmote.cols,
-          '--rows': currentEmote.rows,
-          '--dur-x': `${durationX}s`,
-          '--dur-y': `${durationY}s`,
-        } as React.CSSProperties  }
-        />
-        <div className="controls">
-        <button onClick={prevEmote}>Previous</button>
-        <button onClick={nextEmote}>Next</button>
-        </div>
-
         <footer className="contact">
           <strong>CONTACT ME: </strong>
           <a href="https://website.domain">https://website.domain</a>
