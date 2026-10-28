@@ -119,6 +119,37 @@ function App() {
     setIsGameWindowActive(true);
   }
 
+  const tempEmoteList = [
+    {
+      name: 'emote.png',
+      cols: 10,
+      rows: 19
+    },
+    {
+      name: 'emote-mambo.png',
+      cols: 5,
+      rows: 11
+    }
+  ];
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const currentEmote = tempEmoteList[currentIndex]
+  const durationX = currentEmote.cols / 24;
+  const durationY = currentEmote.rows * durationX;
+
+
+  const nextEmote = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === tempEmoteList.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevEmote = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === 0 ? tempEmoteList.length - 1 : prevIndex - 1
+    );
+  };
+
+
   return (
     <>
       <div className="ticker" aria-label="PISS GREEN MATCHA BEAN">
@@ -171,6 +202,21 @@ function App() {
           </article>
         </section>
         <div className="gremlin-at-rest"></div>
+        <div 
+        key={currentIndex} 
+        className="gremlin-at-rest"
+        style={{
+          '--bg-img': `url(src/assets/${currentEmote.name})`,
+          '--cols': currentEmote.cols,
+          '--rows': currentEmote.rows,
+          '--dur-x': `${durationX}s`,
+          '--dur-y': `${durationY}s`,
+        } as React.CSSProperties  }
+        />
+        <div className="controls">
+        <button onClick={prevEmote}>Previous</button>
+        <button onClick={nextEmote}>Next</button>
+        </div>
 
         <footer className="contact">
           <strong>CONTACT ME: </strong>
