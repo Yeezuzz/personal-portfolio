@@ -240,8 +240,9 @@ body {
 }
 
 .project-card p {
-  margin: auto 0 0;
-  padding-top: 2.6rem;
+  /*margin: auto 0 0;*/
+  /*padding-top: 1rem;
+  padding-bottom: 1rem;*/
   line-height: 1.4;
   font-size: clamp(0.82rem, 1.7vw, 0.95rem);
 }
@@ -264,18 +265,19 @@ body {
 }
 
 .game_start_button {
-  width: clamp(50px, 25%, 250px);
-  margin-left: auto;
-  margin-right: 12.5%;
+  width: clamp(50px, 50%, 250px);
+  /*margin-left: auto;
+  margin-right: 12.5%;*/
   background-image: url(src/assets/evilAssButton.jpg);
   background-position: center 20%;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   cursor: pointer;
+  height: 50%;
 }
 
 .game_start_button-active {
-  background-image: url(src/assets/friend.jpg);
+  background-image: url(src/assets/realPlush.webp);
   background-position: top;
 }
 
@@ -349,7 +351,12 @@ body {
   *, *::before, *::after { transition-duration: 0.01ms !important; }
 }
 
+.game-area {
+  display: none;
+}
+
 .game-area.fullscreen {
+  display: block;
   position: fixed;
   inset: 0;
   width: 100vw;
@@ -359,12 +366,21 @@ body {
 }
 
 .gremlin-at-rest { /*24 FPS anim, 189 total frames*/
+
+    --bg-img: url(src/assets/emote.png);
+    --cols: 10;
+    --rows: 19;
+    --dur-x: 0.4166s;
+    --dur-y: 7.9166s;
+
     width: auto;
     height: 50%;
     aspect-ratio: 1 / 1;
-    background-image: url(src/assets/emote.png); 
-    background-size: 1000% 1900%;
-    animation: spriteX 0.42s steps(10, jump-none) infinite, spriteY 7.98s steps(19, jump-none) infinite;
+    background-image: var(--bg-img); 
+    background-size: calc(var(--cols) * 100%) calc(var(--rows) * 100%);
+    animation: spriteX var(--dur-x) steps(var(--cols), jump-none) infinite, spriteY var(--dur-y) steps(var(--rows), jump-none) infinite;
+
+
 }
 
 .gremlin-in-motion { /*18 FPS anim, 18 total frames*/
