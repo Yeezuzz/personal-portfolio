@@ -99,27 +99,12 @@ function App() {
   function startSession() {
     if (isRunning) return;
     setScore(score => 0);
-    // TODO: Add method to change images
     setObjects([]);
     setIsRunning(true);
     setIsGameWindowActive(true);
   }
 
-  const tempEmoteList = [
-    {
-      name: 'emote.png',
-      cols: 10,
-      rows: 19
-    },
-    {
-      name: 'emote-mambo.png',
-      cols: 5,
-      rows: 11
-    }
-  ];
   const [emoteList, setEmoteList] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
 
   useEffect(() => {
 const controller = new AbortController();
@@ -132,10 +117,8 @@ const controller = new AbortController();
     .catch(err => {
       if (err.name !== "AbortError") {
         console.error("Error fetching emotes:", err);
-        setError(true);
       }
     })
-    .finally(() => setLoading(false));
 
   return () => controller.abort();
 }, []);
@@ -181,10 +164,8 @@ const controller = new AbortController();
           <div className="featured__heading">
             <div className="title_and_button">
               <h1 id="featured-title">Project #1</h1>
-              {/*<button className={`game_start_button ${isGameWindowActive ? `game_start_button-active` : ''}`} onClick={startSession} disabled={isRunning}></button>*/}
             </div>
-            <p>I'll have a project here before the spring cycle for sure<br className="desktop-break"/>
-              maybe</p>
+            <p>I'll have a project here before the spring cycle for sure<br className="desktop-break"/>maybe</p>
           </div>
           <div className="featured__gallery">
             <button className="pill side-link">Prev</button>
@@ -226,7 +207,7 @@ const controller = new AbortController();
         </footer>
       </main>
 
-      {/*Code for THE THING*/}
+      {/*Code to start the game window buggy ash*/}
       <div className={isGameWindowActive ? "game-area fullscreen" : "game-area"}>
         <div className={isGameWindowActive ? "gameTimer" : "gameTimer-hidden"}>{secondsLeft}</div>
         <div className={isGameWindowActive ? "scoreBoard" : "scoreBoard-hidden"}>{score}</div>
