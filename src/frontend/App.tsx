@@ -183,8 +183,8 @@ const controller = new AbortController();
               <h1 id="featured-title">Project #1</h1>
               {/*<button className={`game_start_button ${isGameWindowActive ? `game_start_button-active` : ''}`} onClick={startSession} disabled={isRunning}></button>*/}
             </div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br className="desktop-break"/>
-              Donec ligula felis, laoreet vel aliquam quis, ultricies egestas dui.</p>
+            <p>I'll have a project here before the spring cycle for sure<br className="desktop-break"/>
+              maybe</p>
           </div>
           <div className="featured__gallery">
             <button className="pill side-link">Prev</button>
