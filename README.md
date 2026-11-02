@@ -15,4 +15,4 @@ cd backend
 uv run fastapi dev
 ```
 
-Yay!
+No, it will NOT build properly because I don't understand Typescript.
