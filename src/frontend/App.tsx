@@ -1,9 +1,26 @@
 import { useState, useEffect, type CSSProperties } from 'react'
 import './App.css'
 
+interface Gremlin {
+  id: string;
+  startX: number;
+  endX: number;
+  startY: number;
+  endY: number;
+  clicked?: boolean;
+  deadX?: number;
+  deadY?: number;
+}
+
+interface Emote {
+  name: string;
+  cols: number;
+  rows: number;
+}
+
 function App() {
   const [isRunning, setIsRunning] = useState(false); // Starts game cycle, including fullscreen
-  const [objects, setObjects] = useState([]); // The gremlins
+  const [objects, setObjects] = useState<Gremlin[]>([]); // The gremlins
   const [isGameWindowActive, setIsGameWindowActive] = useState(false); // Runs ending celebration and maintains fullscreen after game end
   const startX = -50;
   const endX = window.innerWidth;
@@ -98,13 +115,13 @@ function App() {
 
   function startSession() {
     if (isRunning) return;
-    setScore(score => 0);
+    setScore(0);
     setObjects([]);
     setIsRunning(true);
     setIsGameWindowActive(true);
   }
 
-  const [emoteList, setEmoteList] = useState([]);
+  const [emoteList, setEmoteList] = useState<Emote[]>([]);
 
   useEffect(() => {
 const controller = new AbortController();
