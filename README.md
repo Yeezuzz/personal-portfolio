@@ -2,7 +2,7 @@
 
 Look at my cool totally not slop website!
 
-## How to run!
+## How to run (locally)!
 
 ### Start frontend
 ```bash
