@@ -1,19 +1,28 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 ASSETS_DIR = Path(__file__).parent.parent / "src" / "assets"
 
-images = [
-    "emote.png",
-    "emote(cafe).png",
-    "emote(doto).png",
-    "emote(gold-ship).png",
-    "emote(mambo).png",
-    "emote(oguri).png",
-    "emote(rice).png"
-]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Adjust for production
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+images = {
+    "emote.png": {"cols": 10, "rows": 19},
+    "emote-cafe.png": {"cols": 10, "rows": 4},
+    "emote-doto.png": {"cols": 10, "rows": 8},
+    "emote-gold-ship.png": {"cols": 10, "rows": 5},
+    "emote-mambo.png": {"cols": 5, "rows": 11},
+    "emote-oguri.png": {"cols": 10, "rows": 5},
+    "emote-rice.png": {"cols": 10, "rows": 16}
+}
 
 messages = []
 
@@ -26,7 +35,7 @@ def main():
 @app.get("/emote")
 def get_emote():
     return {
-        "images": [f"/assets/{filename}" for filename in images]
+        "images": [{"name": filename, "url": f"/assets/{filename}", **dims} for filename, dims in images.items()]
     }
 
 @app.post("/message")

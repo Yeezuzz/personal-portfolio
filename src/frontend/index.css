@@ -241,8 +241,8 @@ body {
 
 .project-card p {
   /*margin: auto 0 0;*/
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  /*padding-top: 1rem;
+  padding-bottom: 1rem;*/
   line-height: 1.4;
   font-size: clamp(0.82rem, 1.7vw, 0.95rem);
 }
@@ -277,7 +277,7 @@ body {
 }
 
 .game_start_button-active {
-  background-image: url(src/assets/friend.jpg);
+  background-image: url(src/assets/realPlush.webp);
   background-position: top;
 }
 

@@ -10,21 +10,7 @@ function App() {
   const [secondsLeft, setSecondsLeft] = useState(20);
   const [score, setScore] = useState(0);
 
-  // Controls the 20-second session
-  /*
-  useEffect(() => {
-    if (!isRunning) return;
-
-    setSecondsLeft(20);
-
-    
-    const sessionTimer = setTimeout(() => {
-      setIsRunning(false);
-    }, 20000);
-    
-    return () => clearTimeout(sessionTimer);
-  }, [isRunning]);
-    */
+  // Controls the 30-second session
   useEffect(() => {
     if (!isRunning) return;
 
@@ -131,24 +117,47 @@ function App() {
       rows: 11
     }
   ];
+  const [emoteList, setEmoteList] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+const controller = new AbortController();
+  fetch(`http://localhost:8000/emote`, { signal: controller.signal })
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    })
+    .then(data => setEmoteList(data.images))
+    .catch(err => {
+      if (err.name !== "AbortError") {
+        console.error("Error fetching emotes:", err);
+        setError(true);
+      }
+    })
+    .finally(() => setLoading(false));
+
+  return () => controller.abort();
+}, []);
+
+
   const [currentIndex, setCurrentIndex] = useState(0);
-  const currentEmote = tempEmoteList[currentIndex]
-  const durationX = currentEmote.cols / 24;
-  const durationY = currentEmote.rows * durationX;
+  const currentEmote = emoteList[currentIndex]
+  const durationX = currentEmote?.cols / 24;
+  const durationY = currentEmote?.rows * durationX;
 
 
   const nextEmote = () => {
     setCurrentIndex((prevIndex) => 
-      prevIndex === tempEmoteList.length - 1 ? 0 : prevIndex + 1
+      prevIndex === emoteList.length - 1 ? 0 : prevIndex + 1
     );
   };
 
   const prevEmote = () => {
     setCurrentIndex((prevIndex) => 
-      prevIndex === 0 ? tempEmoteList.length - 1 : prevIndex - 1
+      prevIndex === 0 ? emoteList.length - 1 : prevIndex - 1
     );
   };
-
 
   return (
     <>
@@ -187,10 +196,8 @@ function App() {
         <section className="project-grid" aria-label="Other projects">
           <article className="project project-card" id="project-2">
             <h2>Project #2</h2>
-            <a className={`project-card__image ${isGameWindowActive ? `project-card__image-activeOne` : ''}`} href="#project-2" aria-label="View Project 2">
-            </a>
-            <p>There's nothing here for now... How about you play a game while you wait?</p>
             <button className={`game_start_button ${isGameWindowActive ? `game_start_button-active` : ''}`} onClick={startSession} disabled={isRunning}></button>
+            <p>There's nothing here for now... How about you play a game while you wait?</p>
           </article>
 
           <article className="project project-card" id="project-3">
@@ -199,16 +206,16 @@ function App() {
               key={currentIndex} 
               className="gremlin-at-rest"
               style={{
-                '--bg-img': `url(src/assets/${currentEmote.name})`,
-                '--cols': currentEmote.cols,
-                '--rows': currentEmote.rows,
+                '--bg-img': `url(src/assets/${currentEmote?.name})`,
+                '--cols': currentEmote?.cols,
+                '--rows': currentEmote?.rows,
                 '--dur-x': `${durationX}s`,
                 '--dur-y': `${durationY}s`,
               } as React.CSSProperties  }
             />
             <p>There's nothing here for now... How about a friend?</p>
             <div className="controls">
-              <button onClick={prevEmote}>Previous</button>
+              <button onClick={prevEmote}>Prev</button>
               <button onClick={nextEmote}>Next</button>
             </div>
           </article>
