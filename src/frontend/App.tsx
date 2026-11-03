@@ -159,6 +159,43 @@ const controller = new AbortController();
     );
   };
 
+  const [messageText, setMessageText] = useState("");
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/messages")
+        .then(res => res.json())
+        .then(data => setMessages(data.messages))
+        .catch(err => console.error("Failed to load messages:", err));
+  }, []);
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const text = messageText.trim();
+
+    if (!text) return;
+    try {
+        const response = await fetch("http://localhost:8000/message", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ text: text })
+        });
+        if (!response.ok) {
+            throw new Error("Failed to submit message");
+        }
+
+        const newMessage = await response.json();
+        // Add the new message to the displayed messages
+        setMessages(prev => [...prev, newMessage]);
+        // Clear the input
+        setMessageText("");
+    } catch (err) {
+        console.error(err);
+    }
+}
+
   return (
     <>
       <div className="ticker" aria-label="PISS GREEN MATCHA BEAN">
@@ -196,6 +233,9 @@ const controller = new AbortController();
             <h2>Project #2</h2>
             <button className={`game_start_button ${isGameWindowActive ? `game_start_button-active` : ''}`} onClick={startSession} disabled={isRunning}></button>
             <p>There's nothing here for now... How about you play a game while you wait?</p>
+            <div className="controls">
+
+            </div>
           </article>
 
           <article className="project project-card" id="project-3">
@@ -210,14 +250,49 @@ const controller = new AbortController();
                 '--dur-x': `${durationX}s`,
                 '--dur-y': `${durationY}s`,
               } as React.CSSProperties  }
-            />
+            >
+              {currentEmote ? "" : <p>Couldn't load any friends :(</p>}
+            </div>
             <p>There's nothing here for now... How about a friend?</p>
             <div className="controls">
-              <button onClick={prevEmote}>Prev</button>
-              <button onClick={nextEmote}>Next</button>
+              <button onClick={prevEmote} className = "pill">Prev</button>
+              <button onClick={nextEmote} className = "pill">Next</button>
             </div>
           </article>
         </section>
+        <section className="featuredMessages">
+          <h2>Read our rave reviews!</h2>
+          <div className="message">
+            <span className="messageHeader"><p className = "userName">User</p><p className = "timeStamp">Time</p></span>
+            <p>I'm the developer and I think I did a pretty good job.</p>
+          </div>
+          <div className="message">
+            <span className="messageHeader"><p className = "userName">User</p><p className = "timeStamp">Time</p></span>
+            <p>One week is NOT enough time to be making all this.</p>
+          </div>
+          <div className="message">
+            <span className="messageHeader"><p className = "userName">User</p><p className = "timeStamp">Time</p></span>
+            <p>ChatGPT generate me a website make no mistakes.</p>
+          </div>
+          {messages.map((message, index) => (
+              <div className="message" key={index}>
+                  <span className="messageHeader"><p className="userName">User</p><p className="timeStamp">{new Date(message.timestamp).toLocaleString()}</p></span>
+                  <p>{message.text}</p>
+              </div>
+          ))}
+        </section>
+        <form className = "submitForm" onSubmit={handleSubmit}>
+            <strong>LEAVE A MESSAGE: </strong>
+            <input
+                type="text"
+                value={messageText}
+                onChange={(e) => setMessageText(e.target.value)}
+                placeholder="Write something nice"
+            />
+            <button className="pill" type="submit">
+                Submit
+            </button>
+        </form>
         <footer className="contact">
           <strong>CONTACT ME: </strong>
           <a href="https://website.domain">https://website.domain</a>

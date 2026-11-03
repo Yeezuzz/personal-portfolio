@@ -2,9 +2,11 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from pathlib import Path
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from datetime import datetime
 
 app = FastAPI()
-ASSETS_DIR = Path(__file__).parent.parent / "src" / "assets"
+ASSETS_DIR = Path(__file__).parent.parent / "public" / "assets"
 
 app.add_middleware(
     CORSMiddleware,
@@ -28,20 +30,29 @@ messages = []
 
 app.mount("/assets", StaticFiles(directory=ASSETS_DIR), name="assets")
 
-@app.get("/")
-def main():
-    return {"message": "Hello World"}
-
 @app.get("/emote")
 def get_emote():
     return {
         "images": [{"name": filename, "url": f"/assets/{filename}", **dims} for filename, dims in images.items()]
     }
 
+class Message(BaseModel):
+    text: str
+
 @app.post("/message")
-def add_message(text: str):
-    messages.append(text)
-    return { "message": "Message saved" }
+def add_message(message: Message):
+    new_message = {
+        "text": message.text,
+        "timestamp": datetime.now().isoformat()
+    }
+
+    messages.append(new_message)
+
+    return new_message
+
+@app.get("/messages")
+def main():
+    return {"messages": messages}
 
 @app.get("/secret-flag-for-ctfs-or-somethin-idk")
 def main():

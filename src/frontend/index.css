@@ -199,7 +199,7 @@ body {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(1.25rem, 9vw, 5rem);
   padding-inline: 0.2rem;
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 }
 
 .project-card {
@@ -249,6 +249,8 @@ body {
 
 .contact {
   margin-top: auto;
+  margin-left: 10px;
+  margin-right: 10px;
   padding-top: 1.5rem;
   text-align: center;
   font-size: clamp(0.85rem, 2vw, 1rem);
@@ -265,7 +267,7 @@ body {
 }
 
 .game_start_button {
-  width: clamp(50px, 50%, 250px);
+  /*width: clamp(50px, 50%, 250px);*/
   /*margin-left: auto;
   margin-right: 12.5%;*/
   background-image: url(/assets/evilAssButton.jpg);
@@ -274,6 +276,8 @@ body {
   background-repeat: no-repeat;
   cursor: pointer;
   height: 50%;
+  display: block;
+  aspect-ratio: 1 / 1;
 }
 
 .game_start_button-active {
@@ -463,4 +467,30 @@ body {
 
 .scoreBoard-hidden {
   visibility: hidden;
+}
+
+h2 {
+  text-align: center;
+}
+
+.message {
+  padding: 1em;
+  margin: 1rem;
+  min-height: 10rem;
+  background-color: var(--sand);
+  border-radius: var(--radius);
+}
+
+.messageHeader {
+  display: inline-flex;
+  justify-content: space-between;
+  min-width: 100%;
+}
+
+.timeStamp {
+  color: gray;
+}
+
+.submitForm {
+  margin: 1rem auto;
 }
