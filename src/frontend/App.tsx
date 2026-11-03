@@ -18,6 +18,11 @@ interface Emote {
   rows: number;
 }
 
+interface Message {
+  text: string;
+  timestamp: string;
+}
+
 function App() {
   const [isRunning, setIsRunning] = useState(false); // Starts game cycle, including fullscreen
   const [objects, setObjects] = useState<Gremlin[]>([]); // The gremlins
@@ -160,7 +165,7 @@ const controller = new AbortController();
   };
 
   const [messageText, setMessageText] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<Message[]>([]);
 
   useEffect(() => {
     fetch("http://localhost:8000/messages")
@@ -169,7 +174,7 @@ const controller = new AbortController();
         .catch(err => console.error("Failed to load messages:", err));
   }, []);
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     const text = messageText.trim();
 
