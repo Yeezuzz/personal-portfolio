@@ -95,11 +95,11 @@ body {
   height: 100%;
   aspect-ratio: 1 / 1;
   position: relative;
-  background: url('src/assets/userIcon.png') center 1px / 99% no-repeat;
+  background: url(/assets/userIcon.png) center 1px / 99% no-repeat;
 }
 
 .avatar-active {
-  background: url('src/assets/frontHorse.jpg') center;
+  background: url(/assets/frontHorse.jpg) center;
   background-size: 80%;
   background-repeat: no-repeat;
 }
@@ -139,12 +139,12 @@ body {
 }
 
 .featured__image {
-  background-image: url(src/assets/projectPic.png);
+  background-image: url(/assets/projectPic.png);
   background-size: 50% 100%;
 }
 
 .featured__image-active {
-  background-image: url(src/assets/sideHorse.jpg);
+  background-image: url(/assets/sideHorse.jpg);
   background-size: 100%;
 }
 
@@ -221,17 +221,17 @@ body {
   display: block;
   width: min(65%, 10rem);
   aspect-ratio: 4 / 3;
-  background-image: url(src/assets/projectPic.png);
+  background-image: url(/assets/projectPic.png);
   background-position: center;
 }
 
 .project-card__image-activeOne {
-  background-image: url(src/assets/realPlush.webp);
+  background-image: url(/assets/realPlush.webp);
   background-size: 99%;
 }
 
 .project-card__image-activeTwo {
-  background-image: url(src/assets/imposterPlush.jpg);
+  background-image: url(/assets/imposterPlush.jpg);
   background-size: 95% 150%;
 }
 
@@ -268,7 +268,7 @@ body {
   width: clamp(50px, 50%, 250px);
   /*margin-left: auto;
   margin-right: 12.5%;*/
-  background-image: url(src/assets/evilAssButton.jpg);
+  background-image: url(/assets/evilAssButton.jpg);
   background-position: center 20%;
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -277,7 +277,7 @@ body {
 }
 
 .game_start_button-active {
-  background-image: url(src/assets/realPlush.webp);
+  background-image: url(/assets/realPlush.webp);
   background-position: top;
 }
 
@@ -367,7 +367,7 @@ body {
 
 .gremlin-at-rest { /*24 FPS anim, 189 total frames*/
 
-    --bg-img: url(src/assets/emote.png);
+    --bg-img: url(/assets/emote.png);
     --cols: 10;
     --rows: 19;
     --dur-x: 0.4166s;
@@ -391,7 +391,7 @@ body {
     height: 150px;
     z-index: 999;
     aspect-ratio: 1 / 1;
-    background-image: url(src/assets/run-right-alter.png);
+    background-image: url(/assets/run-right-alter.png);
     background-size: 900% 200%;
     animation: spriteX 0.5s steps(9, jump-none) infinite, spriteY 1s steps(2, jump-none) infinite, move-gremlin 4s linear forwards;
     animation-fill-mode: forwards;
@@ -405,7 +405,7 @@ body {
   width: 150px;
   height: 150px;
   aspect-ratio: 1 / 1;
-  background-image: url(src/assets/outro.png);
+  background-image: url(/assets/outro.png);
   background-size: 1000% 700%;
   animation: spriteX 0.42s steps(10, jump-none) forwards, spriteY 2.94s steps(7, jump-none) forwards;
   transform: translate3d(var(--dead-x), var(--dead-y), 0);

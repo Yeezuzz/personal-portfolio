@@ -204,7 +204,7 @@ const controller = new AbortController();
               key={currentIndex} 
               className="gremlin-at-rest"
               style={{
-                '--bg-img': `url(src/assets/${currentEmote?.name})`,
+                '--bg-img': `url(/assets/${currentEmote?.name})`,
                 '--cols': currentEmote?.cols,
                 '--rows': currentEmote?.rows,
                 '--dur-x': `${durationX}s`,
