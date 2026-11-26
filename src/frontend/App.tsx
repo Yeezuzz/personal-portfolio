@@ -1,4 +1,4 @@
-import { useState, useEffect, type CSSProperties } from 'react'
+import { useState, useEffect, useLayoutEffect, useRef, type CSSProperties } from 'react'
 import './App.css'
 
 interface Gremlin {
@@ -29,26 +29,27 @@ function App() {
   const [isGameWindowActive, setIsGameWindowActive] = useState(false); // Runs ending celebration and maintains fullscreen after game end
   const startX = -50;
   const endX = window.innerWidth;
-  const [secondsLeft, setSecondsLeft] = useState(20);
+  const [secondsLeft, setSecondsLeft] = useState(20); // ?
   const [score, setScore] = useState(0);
 
   // Controls the 30-second session
   useEffect(() => {
     if (!isRunning) return;
 
-    setSecondsLeft(30);
+    setSecondsLeft(30); // the parameter we define later is automatically supplied with the curr value of this useState
 
-    const timer = setInterval(() => {
-      setSecondsLeft(prev => {
+    const timer = setInterval(() => { // setInterval(callback, delay); from browser's built-in Web API (weird)
+      setSecondsLeft(prev => { // parameter of anonymous function
         if (prev <= 1) {
           clearInterval(timer);
           setIsRunning(false);
           return 0;
         }
 
-        return prev - 1;
+        return prev - 1; // count down to 0, then clearInterval and setIsRunning
     });
-  }, 1000);
+  }, 1000); // we use an anonymous function because of passing the NAME of a func vs passing a func() to another
+            // passing name tells this to execute the func every interval, passing func() does not do that
 
   return () => clearInterval(timer);
 }, [isRunning]);
@@ -199,15 +200,33 @@ const controller = new AbortController();
     } catch (err) {
         console.error(err);
     }
-}
+  }
+
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [trackwidth, setTrackWidth] = useState<number>(0);
+
+  useLayoutEffect(() => {
+    const updateWidth = () => {
+      if (trackRef.current) {
+        setTrackWidth(trackRef.current.offsetWidth);
+      }
+    };
+
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
 
   return (
     <>
-      <div className="ticker" aria-label="PISS GREEN MATCHA BEAN">
-        <div className="ticker__track">
-          <span>MATCHA GREEN!!! IT'S SAFE!!! IT'S SERVICEABLE!!! IT'S BORING!!! IT'S PERFECT!!! MATCHA GREEN!!! IT'S SAFE!!! IT'S SERVICEABLE!!! IT'S BORING!!! IT'S PERFECT!!!&nbsp;&nbsp;</span>
-          <span aria-hidden="true">MATCHA GREEN!!! IT'S SAFE!!! IT'S SERVICEABLE!!! IT'S BORING!!! IT'S PERFECT!!! MATCHA GREEN!!! IT'S SAFE!!! IT'S SERVICEABLE!!! IT'S BORING!!! IT'S PERFECT!!!&nbsp;&nbsp;</span>
+      <div className="ticker">
+        <div ref = {trackRef} className="ticker__track" style = {{'--track-width': `${trackwidth}`} as CSSProperties}>
+          <span>MATCHA GREEN!!! IT'S SAFE!!! IT'S SERVICEABLE!!! IT'S BORING!!! IT'S PERFECT!!!</span>
+          <span>HIRE ME HIRE ME HIRE ME HIRE ME HIRE ME HIRE ME HIRE ME HIRE ME OH PLEASEEEE HIRE ME</span>
+          <span>PLAY ZURU BY TWOKAT!!! DEMO OUT... EVENTUALLY!! LOOK IT UP ON ITCH!!! SHAMELESS PLUG GO!!</span>
         </div>
+
       </div>
 
       <main className="page">

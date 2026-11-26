@@ -34,12 +34,14 @@ body {
   color: var(--cream);
   white-space: nowrap;
   border-bottom: 3px solid rgba(0, 0, 0, 0.18);
+  container-type: inline-size;
 }
 
 .ticker__track {
   display: flex;
   width: max-content;
-  animation: ticker-scroll 28s linear infinite;
+  animation: ticker-scroll calc(var(--track-width) / 40 * 1s) linear infinite;
+  gap: 33cqw;
 }
 
 .ticker__track span {
@@ -50,8 +52,8 @@ body {
 }
 
 @keyframes ticker-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-25%); }
+  0% { transform: translateX(101cqw); } /* So letters don't show up at the barest edge of the screen */
+  90%, 100% { transform: translateX(-101%); } /* Holds for 10% of anim duration */
 }
 
 .page {
