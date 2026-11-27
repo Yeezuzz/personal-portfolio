@@ -284,18 +284,15 @@ const controller = new AbortController();
             </div>
           </article>
         </section>
+
         <section className="featuredMessages">
           <h2>Read our rave reviews!</h2>
           <div className="message">
-            <span className="messageHeader"><p className = "userName">User</p><p className = "timeStamp">Time</p></span>
+            <span className="messageHeader"><p className = "userName">THE man himself</p><p className = "timeStamp">01/10/1000, 1:11:11 AM</p></span>
             <p>I'm the developer and I think I did a pretty good job.</p>
           </div>
           <div className="message">
-            <span className="messageHeader"><p className = "userName">User</p><p className = "timeStamp">Time</p></span>
-            <p>One week is NOT enough time to be making all this.</p>
-          </div>
-          <div className="message">
-            <span className="messageHeader"><p className = "userName">User</p><p className = "timeStamp">Time</p></span>
+            <span className="messageHeader"><p className = "userName">THE guy to hire</p><p className = "timeStamp">01/11/1001, 1:11:11 AM</p></span>
             <p>ChatGPT generate me a website make no mistakes.</p>
           </div>
           {messages.map((message, index) => (
@@ -305,18 +302,36 @@ const controller = new AbortController();
               </div>
           ))}
         </section>
+
         <form className = "submitForm" onSubmit={handleSubmit}>
-            <strong>LEAVE A MESSAGE: </strong>
-            <input
+            <strong>LEAVE A MESSAGE</strong>
+            <span className = "formElement">
+              <label>Name *</label>
+              <input
                 type="text"
-                value={messageText}
-                onChange={(e) => setMessageText(e.target.value)}
-                placeholder="Write something nice"
-            />
+              />
+            </span>
+            <span className = "formElement">
+              <label>Location</label>
+              <select name="location">
+                <option value="usa">USA</option>
+                <option value="stretchdat">USA Minor Outlying Islands</option>
+              </select>
+            </span>
+            <span className = "formElement">
+              <label>Message *</label>
+              <textarea
+                  value={messageText}
+                  onChange={(e) => setMessageText(e.target.value)}
+                  placeholder="Write something nice"
+                  style={{minHeight: `8rem`}}
+              />
+            </span>
             <button className="pill" type="submit">
                 Submit
             </button>
         </form>
+
         <footer className="contact">
           <strong>CONTACT ME: </strong>
           <a href="https://website.domain">https://website.domain</a>

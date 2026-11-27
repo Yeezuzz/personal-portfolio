@@ -481,6 +481,7 @@ h2 {
   min-height: 10rem;
   background-color: var(--sand);
   border-radius: var(--radius);
+  border: 1px solid black;
 }
 
 .messageHeader {
@@ -494,5 +495,45 @@ h2 {
 }
 
 .submitForm {
-  margin: 1rem auto;
+  display: grid;
+  grid-template-columns: max-content 1fr; /* Col 1 fits longest label, Col 2 fills remaining width */
+  row-gap: 1rem;       /* Matches your previous gap: 1rem */
+  column-gap: 1rem;    /* Consistent space between all labels and inputs */
+  width: 66%;
+  align-self: center;
+  align-items: center; /* Vertically centers labels with single-line inputs */
+  padding: 1.5%;
+  background-color: var(--sand);
+  border: 2px solid var(--matcha);
+}
+
+.submitForm > strong {
+  grid-column: 1 / -1;
+}
+
+.submitForm > button {
+  grid-column: 1 / -1;
+  background-color: var(--sage);
+}
+
+.formElement {
+  display: contents;
+}
+
+.formElement label:has(+ textarea) {
+  align-self: start;
+  padding-top: 0.4rem;
+}
+
+.formElement textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.formElement select {
+  width: fit-content;
+}
+
+.formElement input {
+  width: 24ch; /*shh*/
 }
